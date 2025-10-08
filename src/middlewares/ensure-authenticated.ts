@@ -31,3 +31,5 @@ function ensureAuthenticated(req: Request, res: Response, next: NextFunction){
     throw new AppError("Token JWT é inválido", 401)
   }
 }
+
+export { ensureAuthenticated }
