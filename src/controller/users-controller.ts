@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { AppError } from "@/utils/AppError";
 import { prisma } from "@/database/prisma"
 import { hash } from "bcrypt" 
-import { z } from "zod"
+import { email, z } from "zod"
 
 class UsersController{
   async create(req: Request, res: Response){

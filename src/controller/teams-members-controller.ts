@@ -29,7 +29,7 @@ class TeamsMembersController {
         where: {userId: userId, teamId: teamId}
       })
 
-      if(!alreadyMember){
+      if(alreadyMember){
         throw new AppError("Este usuário já é membro deste time!", 400)
       }
 
@@ -43,6 +43,32 @@ class TeamsMembersController {
     return res.status(201).json(teamMember)
   }
 
+  async show(req: Request, res: Response){
+    const { id } = req.params
+
+    const member = await prisma.teamMembers.findUnique({
+      where: { id },
+      include: {
+        user: {
+          select: {
+            name: true,
+            role: true
+          },
+        },
+        team: {
+          select: {
+            name: true
+          }
+        }
+      }
+    })
+
+    if(!member){
+      throw new AppError("Membro não encontrado!")
+    }
+
+    return res.json(member)
+  }
 }
 
 export { TeamsMembersController }
