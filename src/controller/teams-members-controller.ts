@@ -95,6 +95,27 @@ class TeamsMembersController {
 
     return res.json()
   }
+
+  async removeMember(req: Request, res: Response){
+    const { id } = req.params
+
+    const member = await prisma.teamMembers.findUnique({
+      where: { id },
+      include: {
+        user: {select: {name: true}}
+      }
+    })
+
+    if(!member){
+      throw new AppError("Usuário não encontrado!", 404)
+    }
+
+    await prisma.teamMembers.delete({
+      where: {id}
+    })
+
+    return res.json()
+  }
 }
 
 export { TeamsMembersController }

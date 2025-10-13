@@ -34,6 +34,43 @@ class TeamsController {
     return res.json(teams)
   }
 
+  async update(req: Request, res: Response){
+    const paramsSchema = z.object({
+      id: z.string().uuid()
+    })
+
+    const bodySchema = z.object({
+      name: z.string().trim().min(3),
+      description: z.string().optional() 
+    })
+
+    const { id } = paramsSchema.parse(req.params)
+    const { name, description } = bodySchema.parse(req.body)
+
+    await prisma.teams.update({
+      data: {
+        name,
+        description
+      },
+      where: {
+        id
+      }
+    })
+
+    return res.json()
+  }
+
+  async remove(req: Request, res: Response){
+    const paramsSchema = z.object({
+      id: z.string().uuid()
+    })
+
+    const { id } = paramsSchema.parse(req.params)
+
+    await prisma.teams.delete({where: {id: id}})
+
+    return res.json()
+  }
 }
 
 export { TeamsController }
