@@ -2,14 +2,16 @@ import { Request, Response } from "express";
 import { AppError } from "@/utils/AppError";
 import { prisma } from "@/database/prisma"
 import { hash } from "bcrypt" 
-import { email, z } from "zod"
+import { z } from "zod"
+import { UserRole } from "@prisma/client";
 
 class UsersController{
   async create(req: Request, res: Response){
     const bodySchema = z.object({
       name: z.string().trim().min(3),
-      email: z.string().email(),
-      password: z.string().min(6)
+      email: z.string().email().toLowerCase(),
+      password: z.string().min(6),
+      role: z.enum([UserRole.member, UserRole.admin]).default(UserRole.member)
     })
 
     const {name, email, password} = bodySchema.parse(req.body)

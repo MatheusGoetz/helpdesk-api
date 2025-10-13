@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "@/database/prisma";
-import { z } from "zod"
+import { uuid, z } from "zod"
 import { AppError } from "@/utils/AppError";
 
 class TeamsMembersController {
@@ -39,7 +39,7 @@ class TeamsMembersController {
           teamId: teamId
         }
       })
-
+    console.log(teamMember)
     return res.status(201).json(teamMember)
   }
 
@@ -68,6 +68,32 @@ class TeamsMembersController {
     }
 
     return res.json(member)
+  }
+
+  async updateTeam(req: Request, res: Response){
+    const paramsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const bodySchema = z.object({
+      userId: z.string().uuid(),
+      teamId: z.string().uuid()
+    })
+
+    const { id } = paramsSchema.parse(req.params)
+    const { userId, teamId } = bodySchema.parse(req.body)
+
+    await prisma.teamMembers.update({
+      data: {
+        userId,
+        teamId
+      },
+      where: {
+        id,
+      }
+    })
+
+    return res.json()
   }
 }
 
