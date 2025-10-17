@@ -5,12 +5,14 @@ import { teamsRoutes } from "./teams-routes";
 import { sessionRoutes } from "./sessions-routes";
 import { teamsMembersRoutes } from "./teams-members-routes";
 import { ensureAuthenticated } from "@/middlewares/ensure-authenticated";
+import { tasksFilterRoutes } from "./tasks-filters-routes";
 
 const routes = Router()
 
 routes.use("/users", usersRoutes)
 routes.use("/sessions", sessionRoutes)
 routes.use("/tasks", tasksRoutes)
+routes.use("/tasks-filters", tasksFilterRoutes)
 
 routes.use(ensureAuthenticated)
 routes.use("/teams", teamsRoutes)

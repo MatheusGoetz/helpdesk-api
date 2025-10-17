@@ -51,12 +51,12 @@ class TasksController {
     })
 
     const bodySchema = z.object({
-      title: z.string().trim().min(4),
-      description: z.string().trim().min(6),
+      title: z.string().trim().min(4).optional(),
+      description: z.string().trim().min(6).optional(),
       status: z.enum([StatusTasks.pending, StatusTasks.in_progress, StatusTasks.completed]).default(StatusTasks.pending),
       priority: z.enum([PriorityTasks.low, PriorityTasks.medium, PriorityTasks.high]).default(PriorityTasks.medium),
-      assignedTo: z.string().uuid(),
-      teamId: z.string().uuid()
+      assignedTo: z.string().uuid().optional(),
+      teamId: z.string().uuid().optional()
     })
 
     const { id } = paramsSchema.parse(req.params)
