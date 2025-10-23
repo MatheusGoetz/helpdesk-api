@@ -13,8 +13,6 @@ routes.use("/users", usersRoutes)
 routes.use("/sessions", sessionRoutes)
 routes.use("/tasks", tasksRoutes)
 routes.use("/tasks-filters", tasksFilterRoutes)
-
-routes.use(ensureAuthenticated)
 routes.use("/teams", teamsRoutes)
 routes.use("/teams-members", teamsMembersRoutes)
 

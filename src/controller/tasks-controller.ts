@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { prisma } from '@/database/prisma';
 import { PriorityTasks, StatusTasks } from '@prisma/client';
 import { AppError } from '@/utils/AppError';
+import id from 'zod/v4/locales/id.js';
 
 class TasksController {
   async create(req: Request, res: Response){
@@ -81,7 +82,13 @@ class TasksController {
   }
 
   async index(req: Request, res: Response){
-    const tasks = await prisma.tasks.findMany()
+    const paramsSchema = z.object({
+      id: z.string().uuid()
+    })
+
+    const { id } = paramsSchema.parse(req.params)
+
+    const tasks = await prisma.tasks.findUnique({ where: {id: id}})
 
     return res.json(tasks)
   }
