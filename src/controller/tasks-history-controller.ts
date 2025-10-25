@@ -55,7 +55,10 @@ class TaskHistoryController{
     const { task_id } = paramsSchema.parse(req.params);
 
     const task = await prisma.tasks.findUnique({
-      where: { id: task_id }
+      where: { id: task_id },
+      include: {
+        TaskHistory: true
+      }
     })
 
     if(req.user?.role === "member" && req.user.id !== task?.assignedTo){
