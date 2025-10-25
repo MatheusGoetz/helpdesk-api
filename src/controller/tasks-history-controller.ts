@@ -57,7 +57,7 @@ class TaskHistoryController{
     const task = await prisma.tasks.findUnique({
       where: { id: task_id },
       include: {
-        TaskHistory: true
+        TaskHistory: {select: {changedBy: true, oldStatus: true, newStatus: true, changedAt: true}},
       }
     })
 
