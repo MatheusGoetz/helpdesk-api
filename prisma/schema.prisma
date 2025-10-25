@@ -69,8 +69,9 @@ model TaskHistory {
   oldStatus StatusTasks
   newStatus StatusTasks
   changedAt DateTime    @default(now()) @map("changed_at")
-  user      User        @relation(fields: [changedBy], references: [id])
-  tasks     Tasks       @relation(fields: [taskId], references: [id])
+
+  user  User  @relation(fields: [changedBy], references: [id])
+  tasks Tasks @relation(fields: [taskId], references: [id])
 
   @@map("task_history")
 }

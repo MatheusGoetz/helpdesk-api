@@ -3,7 +3,6 @@ import { z } from 'zod'
 import { prisma } from '@/database/prisma';
 import { PriorityTasks, StatusTasks } from '@prisma/client';
 import { AppError } from '@/utils/AppError';
-import id from 'zod/v4/locales/id.js';
 
 class TasksController {
   async create(req: Request, res: Response){
@@ -54,20 +53,18 @@ class TasksController {
     const bodySchema = z.object({
       title: z.string().trim().min(4).optional(),
       description: z.string().trim().min(6).optional(),
-      status: z.enum([StatusTasks.pending, StatusTasks.in_progress, StatusTasks.completed]).default(StatusTasks.pending),
       priority: z.enum([PriorityTasks.low, PriorityTasks.medium, PriorityTasks.high]).default(PriorityTasks.medium),
       assignedTo: z.string().uuid().optional(),
       teamId: z.string().uuid().optional()
     })
 
     const { id } = paramsSchema.parse(req.params)
-    const { title, description, status, priority, assignedTo, teamId } = bodySchema.parse(req.body)
+    const { title, description, priority, assignedTo, teamId } = bodySchema.parse(req.body)
 
     await prisma.tasks.update({
       data: {
         title,
         description,
-        status,
         priority,
         assignedTo,
         teamId
