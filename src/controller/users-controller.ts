@@ -14,7 +14,7 @@ class UsersController{
       role: z.enum([UserRole.member, UserRole.admin]).default(UserRole.member)
     })
 
-    const {name, email, password} = bodySchema.parse(req.body)
+    const {name, email, password, role} = bodySchema.parse(req.body)
 
     const userWithSameEmail = await prisma.user.findFirst({ where: {email}}) // verificando se o e-mail ja esta cadastrado.
 
@@ -28,7 +28,8 @@ class UsersController{
       data: {
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        role: role ?? "member"
       }
     })
 

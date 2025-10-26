@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch --env-file .env src/server.ts"
+    "dev": "tsx watch --env-file .env src/server.ts",
+    "test:dev": "cross-env NODE_OPTIONS='--experimental-vm-modules' npx jest --watchAll --runInBand"
   },
   "author": "Matheus Goetz",
   "license": "ISC",
@@ -26,10 +27,12 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.5.2",
     "@types/supertest": "^6.0.3",
+    "cross-env": "^10.1.0",
     "jest": "^30.2.0",
     "prisma": "^6.16.2",
     "supertest": "^7.1.4",
     "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   }
 }

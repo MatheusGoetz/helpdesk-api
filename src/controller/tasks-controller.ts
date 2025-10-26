@@ -42,7 +42,7 @@ class TasksController {
       }
     })
 
-    return res.json(task)
+    return res.status(201).json(task)
   }
 
   async update(req: Request, res: Response){
@@ -75,7 +75,7 @@ class TasksController {
     })
 
 
-    return res.json()
+    return res.status(201).json()
   }
 
   async index(req: Request, res: Response){
