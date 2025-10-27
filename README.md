@@ -23,10 +23,6 @@
 > **Base URL:**  
 > 🔗 [https://helpdesk-api-ghm0.onrender.com](https://helpdesk-api-ghm0.onrender.com)
 
-Se o projeto possuir documentação Swagger:
-> 📘 **Documentação Swagger (opcional):**  
-> [https://helpdesk-api-ghm0.onrender.com/docs](https://helpdesk-api-ghm0.onrender.com/docs)
-
 ---
 
 ## 🧩 Tecnologias Utilizadas
